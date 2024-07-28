@@ -93,5 +93,4 @@ The project also uses libraries and tools from the following sources:
 * Tableau
 * Matplotlib
 * Seaborn
-* R
 * Python's StatsModels

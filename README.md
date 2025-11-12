@@ -46,7 +46,7 @@ Hence, a district level implementation was chosen focusing on Varanasi (Uttar Pr
 
 | Dataset                               | Description                                              | Source                                                                    |
 | ------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------- |
-| **Population & Household Data**       | Census of India (2011) at village/ward level             | [Census India](https://censusindia.gov.in)                                |
+| **Population & Household Data**       | Census of India (2011) at rural/urban/ward level             | [Census India](https://censusindia.gov.in)                                |
 | **Existing Aadhaar Centers**          | Official UIDAI & ISRO Bhuvan portal (cleaned & geocoded) | [Bhuvan Aadhaar Portal](https://bhuvan-app3.nrsc.gov.in/aadhaar/)         |
 | **NTL (Night-Time Light) Brightness** | VIIRS DNB monthly composite data                         | [NASA/NOAA VIIRS](https://eogdata.mines.edu/download_dnb_composites.html) |
 

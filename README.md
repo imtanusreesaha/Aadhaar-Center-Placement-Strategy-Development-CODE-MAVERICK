@@ -86,9 +86,9 @@ $$
 
 ## Clustering and Optimization
 
-High-priority villages were grouped using K-Means Clustering (k=3) to identify concentrated underserved zones.
+* High-priority villages were grouped using K-Means Clustering (k=3) to identify concentrated underserved zones.
 
-The centroids of these clusters represent suggested new Aadhaar center coordinates.
+* The centroids of these clusters represent suggested new Aadhaar center coordinates.
 
 
 ## Results
@@ -155,7 +155,7 @@ Layers:
 * 🏠 orange house icons → Suggested new Aadhaar centers
 
 
-## Interpretation:
+ Interpretation:
 
 * Red glowing zones highlight Aadhaar service deserts.
 * Orange icons show geographically optimal new locations to reduce average travel distance.
@@ -190,8 +190,7 @@ Layers:
 A simple visualization comparing population and distance to centers clearly shows that villages farther away also tend to have larger populations, emphasizing service imbalance.
 
 ## Performance & Impact
-
-### Before vs After — Accessibility Improvement
+ Before vs After — Accessibility Improvement
 
 <p align="center">
   <img src="images/comparison_before_after.png" width="700">

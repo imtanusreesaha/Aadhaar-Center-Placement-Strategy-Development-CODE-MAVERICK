@@ -163,6 +163,7 @@ Layers:
 ## Cluster Visualization (matplotlib)
 <p align="center">
   <img src="images/cluster visualisation.png" width="700">
+  <img src="images/varanasi_cluster_map.png" width="700">
 </p>
 
 <p align="center">

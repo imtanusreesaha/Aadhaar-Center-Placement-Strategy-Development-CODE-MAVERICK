@@ -1,96 +1,176 @@
-# Strategic Aadhaar Centre Placement with Night Lights and Census Data
+# Strategic Aadhaar Centre Placement using Night Time Lights(NTL), Census & Accessibility Data
+Case Study: Varanasi District, Uttar Pradesh
 
 ## Project Overview
 
-This project aims to develop a data-driven approach to identify optimal locations for new Aadhaar centers in India. The project utilizes a combination of nighttime lights (NTL) data, population density data, census data, and existing Aadhaar center data to identify areas with high demand but limited accessibility.
+This project develops a data-driven geospatial model to identify optimal new Aadhaar center locations by integrating satellite imagery, census data, and accessibility analysis.
+The goal is to support evidence-based policy planning for digital service inclusion across India — ensuring that Aadhaar centers are equitably distributed relative to population demand and infrastructure availability.
 
 ## Problem Statement
 
 Aadhaar is a 12-digit unique identity number issued to all Indian residents. However, many residents, particularly in rural areas, face difficulties in accessing Aadhaar centers to enroll or update their information. This project seeks to address this issue by identifying optimal locations for new Aadhaar centers.
 
+## National Vision
+
+Originally, this project was conceptualized as a nationwide system to analyze and visualize service gaps in Aadhaar enrollment accessibility across all Indian districts.
+
+The national framework aimed to combine:
+
+* Census 2011 population and household microdata,
+* NASA/NOAA VIIRS Night-Time Light (NTL) imagery (as a proxy for infrastructure and electrification),
+* UIDAI’s existing Aadhaar center locations, and
+* Administrative boundaries and road connectivity data (OpenStreetMap).
+
+However, building this model for all of India proved data-intensive and computationally challenging, due to:
+
+* Lack of standardized village-level coordinates across all states,
+* Sparse metadata for UIDAI center geolocations, and
+* The massive geographic scope of the analysis,involving not just over 600,000 villages, but also thousands of towns, municipalities, and urban wards.
+
+Hence, a district level implementation was chosen focusing on Varanasi (Uttar Pradesh) as a representative pilot region to demonstrate the model’s full potential.
+## Why Varanasi?
+
+* Urban–Rural Diversity:	Varanasi contains dense city areas (Sigra, Lanka) and rural belts (Pindra, Chiraigaon), making it perfect for balanced analysis.
+
+* Distinct NTL Contrast: Satellite imagery shows a sharp gradient between urban brightness and dark rural outskirts which is ideal for analyzing accessibility inequalities.
+* High Population Pressure	With >2.4k people/km² and significant migration, service demand is intense.
+* Administrative Importance: As a major UP district and cultural hub, improving digital service reach here has strategic social impact.
+
 ## Methodology
 
-### Data Collection
+| Dataset                               | Description                                              | Source                                                                    |
+| ------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **Population & Household Data**       | Census of India (2011) at village/ward level             | [Census India](https://censusindia.gov.in)                                |
+| **Existing Aadhaar Centers**          | Official UIDAI & ISRO Bhuvan portal (cleaned & geocoded) | [Bhuvan Aadhaar Portal](https://bhuvan-app3.nrsc.gov.in/aadhaar/)         |
+| **NTL (Night-Time Light) Brightness** | VIIRS DNB monthly composite data                         | [NASA/NOAA VIIRS](https://eogdata.mines.edu/download_dnb_composites.html) |
 
-* Collect NTL data, population density data, census data, and existing Aadhaar center data.
+## Data Cleaning and Preprocessing
 
-### Data Preprocessing
+* Extracted village name, latitude, longitude, total population, households, and district/subdistrict fields.
+* Geocoded Aadhaar center list using Nominatim (OSM API).
+* Computed village to center distances (in km) using geopy.distance.
+* Extracted mean NTL brightness per village using spatial nearest-neighbor mapping (scipy.spatial.cKDTree).
+* Normalized all continuous variables (MinMaxScaler) to ensure comparability.
 
-* Preprocess the data by cleaning, transforming, and merging it into a single dataset.
+## Weighted Priority Scoring Model
 
-### Rural-Urban Settlement Map
+Each village’s need was modeled as:
 
-* Create a rural-urban settlement map of India using census data.
+$$
+\text{PriorityScore} = 0.4 \times \text{Pop}_{\text{Norm}} + 0.3 \times \text{Dist}_{\text{Norm}} + 0.3 \times (1 - \text{NTL}_{\text{Norm}})
+$$
 
-### Aadhaar Center Density Map
 
-* Create an Aadhaar center density map of India using existing Aadhaar center data.
 
-### Algorithm Development
+| Variable           | Description                | Rationale                                | Weight |
+| ------------------ | -------------------------- | ---------------------------------------- | ------ |
+| `Population_Total` | Population-based demand    | More people = higher service requirement | 0.4    |
+| `Distance_km`      | Distance to nearest center | Larger distance = lower accessibility    | 0.3    |
+| `NTL_Brightness`   | Proxy for infrastructure   | Dimmer = less developed                  | 0.3    |
 
-* Develop algorithms to identify locations for new Aadhaar centers in urban and rural areas.
 
-### Result Visualization
 
-* Visualize the results using maps and graphs.
+### Classification of Areas
 
-## Algorithms
+* 🔴 High Priority — underserved, need new centers
 
-### Urban Area Algorithm
+* 🟠 Medium Priority — moderately served
 
-* This algorithm uses NTL data, population density data, and Aadhaar center density data to identify locations for new Aadhaar centers in urban areas.
+* 🟢 Low Priority — adequately served
 
-### Rural Area Algorithm
+## Clustering and Optimization
 
-* This algorithm uses the distance between a village and existing nearest Aadhaar centers to identify locations for new Aadhaar centers in rural areas.
+High-priority villages were grouped using K-Means Clustering (k=3) to identify concentrated underserved zones.
 
-## Technologies Used
+The centroids of these clusters represent suggested new Aadhaar center coordinates.
 
-* **Programming Language**: Python
-* **Libraries**: Pandas, NumPy, GeoPandas
-* **Geospatial Data Platforms**: ArcGIS, Google Earth Engine, QGIS
-* **Data Visualization Tools**: Tableau, Matplotlib, Seaborn
-* **Statistical Analysis Tools**: R, Python's StatsModels
 
-## Dataset
+## Results
 
-* **NTL Data**: Nighttime lights data from NASA's Earth Observations
-* **Population Density Data**: Population density data from the Indian Census
-* **Census Data**: Census data from the Indian Census
-* **Existing Aadhaar Center Data**: Existing Aadhaar center data from the Unique Identification Authority of India (UIDAI)
+Key Statistics
 
-## Getting Started
+| Metric                   | Value |
+| ------------------------ | ----- |
+| Total Villages Analyzed  | 128   |
+| High Priority Villages   | 26    |
+| Medium Priority Villages | 38    |
+| Low Priority Villages    | 64    |
+| Existing Aadhaar Centers | 71    |
+| Suggested New Centers    | 3     |
 
-1. Clone the repository using `git clone https://github.com/your-username/strategic-aadhaar-centre-placement.git`
-2. Install the required libraries using `pip install -r requirements.txt`
-3. Run the Jupyter notebook using `jupyter notebook`
-4. Open the `Strategic_Aadhaar_Centre_Placement.ipynb` notebook and run the cells
 
-## Contributing
+| Suggested Center | Latitude | Longitude | Region                                          |
+| ---------------- | -------- | --------- | ----------------------------------------------- |
+| Center_1         | 25.42    | 82.95     | South-West Cluster (Rohania–Ramnagar Belt)      |
+| Center_2         | 25.35    | 83.00     | Central Cluster (Sigra–Lanka–Varuna Corridor)   |
+| Center_3         | 25.28    | 82.87     | North-East Cluster (Pindra–Cholapur Rural Belt) |
 
-Contributions are welcome! If you'd like to contribute to the project, please fork the repository and submit a pull request.
+
+## Visualizations
+
+📁 varanasi_priority_heatmap.html
+
+Layers:
+
+* 🔵🟢🟡🔴 gradient background → Service need intensity
+
+* 🔴 red circles → High-priority villages
+
+* 🏠 orange house icons → Suggested new Aadhaar centers
+
+## Interpretation:
+
+* Red glowing zones highlight Aadhaar service deserts.
+* Orange icons show geographically optimal new locations to reduce average travel distance.
+
+## Cluster Visualization (matplotlib)
+**Legend**:
+* 🔴🟢🔵 dots → Different high-priority clusters
+
+* ❌ black X → Cluster centroid (suggested center)
+
+* The clusters correspond to north-east, central, and southern belts of Varanasi.
+
+## Population vs Distance Chart
+
+A simple visualization comparing population and distance to centers clearly shows that villages farther away also tend to have larger populations, emphasizing service imbalance.
+
+##Performance & Impact
+
+| Indicator                        | Before Optimization | After Suggested Centers | Improvement            |
+| -------------------------------- | ------------------- | ----------------------- | ---------------------- |
+| Average Travel Distance (km)     | 9.1 km              | 5.2 km                  | **43% reduction**      |
+| Villages within 5 km of a center | 42%                 | 74%                     | **+32% accessibility** |
+| Total Centers                    | 71                  | 74 (after additions)    | –                      |
+
+
+## Tools & Technologies
+| Category      | Tools Used                                                                             |
+| ------------- | -------------------------------------------------------------------------------------- |
+| Programming   | Python                                                                                 |
+| Libraries     | `pandas`, `numpy`, `scikit-learn`, `folium`, `matplotlib`, `seaborn`, `scipy`, `geopy` |
+| Geospatial    | `cKDTree`, `OpenStreetMap`, `VIIRS`                                                    |
+| Visualization | Folium (interactive), Matplotlib (static)                                              |
+
+## Insights
+* Most underserved areas lie along rural northern and western edges of Varanasi district.
+* Brightness–Accessibility correlation: Villages with low NTL brightness had higher priority scores, confirming the role of infrastructure disparity.
+* Cluster-based site planning provides an efficient, replicable way to allocate limited resources.
+
 
 ## License
 
 The project is licensed under the MIT License.
 
-## Acknowledgments
+## Acknowledgements
 
-The project uses data from the following sources:
+* ISRO Bhuvan — Aadhaar Center Data
 
-* NASA's Earth Observations
-* Indian Census
-* Unique Identification Authority of India (UIDAI)
+* Census India 2011 — Population and Settlement Data
 
-The project also uses libraries and tools from the following sources:
+* NASA/NOAA VIIRS — Night-Time Light Imagery
 
-* Pandas
-* NumPy
-* GeoPandas
-* ArcGIS
-* Google Earth Engine
-* QGIS
-* Tableau
-* Matplotlib
-* Seaborn
-* Python's StatsModels
+* OpenStreetMap — Base Map & Geocoding
+
+* scikit-learn, folium, matplotlib — Analytical & Visualization Tools
+

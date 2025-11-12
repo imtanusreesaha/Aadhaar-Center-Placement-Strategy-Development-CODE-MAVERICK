@@ -161,13 +161,18 @@ Layers:
 * Orange icons show geographically optimal new locations to reduce average travel distance.
 
 ## Cluster Visualization (matplotlib)
+
 <p align="center">
-  <img src="images/cluster visualisation.png" width="700">
-  <img src="images/varanasi_cluster_map.png" width="700">
+  <img src="images/cluster visualisation.png" width="400">
+  <img src="images/varanasi_cluster_map.png" width="400">
 </p>
 
 <p align="center">
-  <em>Figure: K-Means clusters of high-need villages with suggested new Aadhaar center centroids (black X).</em>
+  <em>Figure:K-means clustering (left) vs. Real map clustering (right) in Varanasi District.</em>
+</p>
+
+<p align="center">
+  <em>Figure on left: K-Means clusters of high-need areas with suggested new Aadhaar center centroids (black X).</em>
 </p>
 
 **Legend**:

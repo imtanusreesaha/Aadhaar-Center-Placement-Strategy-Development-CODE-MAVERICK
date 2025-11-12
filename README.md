@@ -33,6 +33,7 @@ However, building this model for all of India proved data-intensive and computat
 * The massive geographic scope of the analysis,involving not just over 600,000 villages, but also thousands of towns, municipalities, and urban wards.
 
 Hence, a district level implementation was chosen focusing on Varanasi (Uttar Pradesh) as a representative pilot region to demonstrate the model’s full potential.
+
 ## Why Varanasi?
 
 * Urban–Rural Diversity:	Varanasi contains dense city areas (Sigra, Lanka) and rural belts (Pindra, Chiraigaon), making it perfect for balanced analysis.
@@ -110,10 +111,40 @@ Key Statistics
 | Center_2         | 25.35    | 83.00     | Central Cluster (Sigra–Lanka–Varuna Corridor)   |
 | Center_3         | 25.28    | 82.87     | North-East Cluster (Pindra–Cholapur Rural Belt) |
 
+## Existing vs Suggested Aadhaar Centers
+
+<p align="center">
+  <img src="images/existing_aadhar centre maps.png" width="400">
+  <img src="images/suggested new centres varanasi map.png" width="400">
+</p>
+
+<p align="center">
+  <em>Figure: Existing Aadhaar centers (left) vs. Suggested new centers (right) in Varanasi District.</em>
+</p>
+
+> Observation: Existing centers are highly concentrated in the urban core,  
+> while suggested centers (orange icons) fill accessibility gaps in rural belts like Pindra and Rohania.
+> * Layers:
+> * 🔵🟢🟡🔴 gradient background → Service need intensity
+> * 🔴 red circles → High-priority villages
+> * 🏠 orange house icons → Suggested new Aadhaar centers
+
 
 ## Visualizations
 
-📁 varanasi_priority_heatmap.html
+* Priority Heatmap (Accessibility Intensity)
+
+<p align="center">
+  <img src="images/varanasi_heatmap.png" width="700">
+</p>
+
+<p align="center">
+  <em>Figure: Heatmap showing population–distance–NTL based accessibility priority in Varanasi.</em>
+</p>
+
+> Red zones = underserved areas (high need)  
+> Blue/Green zones = well-served regions near existing centers.
+
 
 Layers:
 
@@ -123,14 +154,23 @@ Layers:
 
 * 🏠 orange house icons → Suggested new Aadhaar centers
 
+
 ## Interpretation:
 
 * Red glowing zones highlight Aadhaar service deserts.
 * Orange icons show geographically optimal new locations to reduce average travel distance.
 
 ## Cluster Visualization (matplotlib)
+<p align="center">
+  <img src="images/cluster visualisation.png" width="700">
+</p>
+
+<p align="center">
+  <em>Figure: K-Means clusters of high-need villages with suggested new Aadhaar center centroids (black X).</em>
+</p>
+
 **Legend**:
-* 🔴🟢🔵 dots → Different high-priority clusters
+* 🟠🟢🔵 dots → Different high-priority clusters
 
 * ❌ black X → Cluster centroid (suggested center)
 
@@ -138,15 +178,35 @@ Layers:
 
 ## Population vs Distance Chart
 
+<p align="center">
+  <img src="images/population_vs_distance.png" width="600">
+</p>
+
+<p align="center">
+  <em>Figure: Villages farther from Aadhaar centers tend to have higher populations — a clear service imbalance.</em>
+</p>
+
+
 A simple visualization comparing population and distance to centers clearly shows that villages farther away also tend to have larger populations, emphasizing service imbalance.
 
-##Performance & Impact
+## Performance & Impact
 
-| Indicator                        | Before Optimization | After Suggested Centers | Improvement            |
-| -------------------------------- | ------------------- | ----------------------- | ---------------------- |
-| Average Travel Distance (km)     | 9.1 km              | 5.2 km                  | **43% reduction**      |
-| Villages within 5 km of a center | 42%                 | 74%                     | **+32% accessibility** |
-| Total Centers                    | 71                  | 74 (after additions)    | –                      |
+### Before vs After — Accessibility Improvement
+
+<p align="center">
+  <img src="images/comparison_before_after.png" width="700">
+</p>
+
+<p align="center">
+  <em>Figure: Accessibility improvement after optimizing Aadhaar center placement.</em>
+</p>
+
+| Indicator | Before | After | Improvement |
+|------------|--------|-------|--------------|
+| Avg. Travel Distance | 9.1 km | 5.2 km | **43% ↓** |
+| Villages within 5 km | 42% | 74% | **+32% coverage** |
+| High-Priority Villages | 26 | 10 | **–61% underserved** |
+
 
 
 ## Tools & Technologies

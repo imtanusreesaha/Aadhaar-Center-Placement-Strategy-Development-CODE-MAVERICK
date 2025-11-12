@@ -168,7 +168,7 @@ Layers:
 </p>
 
 <p align="center">
-  <em>Figure:K-means clustering (left) vs. Real map clustering (right) in Varanasi District.</em>
+  <em>Figure:K-means clustering (left) and. Real map clustering (right) in Varanasi District.</em>
 </p>
 
 <p align="center">

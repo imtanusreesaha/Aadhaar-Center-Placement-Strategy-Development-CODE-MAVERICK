@@ -8,8 +8,8 @@ Case Study: Varanasi District, Uttar Pradesh
 
 ## Project Overview
 
-This project develops a data-driven geospatial model to identify optimal new Aadhaar center locations by integrating satellite imagery, census data, and accessibility analysis.
-The goal is to support evidence-based policy planning for digital service inclusion across India — ensuring that Aadhaar centers are equitably distributed relative to population demand and infrastructure availability.
+This project develops a data driven geospatial model to identify optimal new Aadhaar center locations by integrating satellite imagery, census data, and accessibility analysis.
+The goal is to support evidence-based policy planning for digital service inclusion across India  ensuring that Aadhaar centers are equitably distributed relative to population demand and infrastructure availability.
 
 ## Problem Statement
 
